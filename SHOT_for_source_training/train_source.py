@@ -175,10 +175,10 @@ def train_source(args):
     max_iter = args.max_epoch * len(dset_loaders["source_tr"])
     interval_iter = max_iter // 10
     iter_num = 0
-
     netF.train()
     netB.train()
     netC.train()
+
 
     while iter_num < max_iter:
         try:
@@ -292,6 +292,9 @@ if __name__ == "__main__":
     if args.dset == 'office-caltech':
         names = ['amazon_0', 'amazon_1', 'amazon_2', 'caltech_0', 'caltech_1', 'caltech_2', 'dslr_0', 'dslr_1', 'dslr_2', 'webcam_0', 'webcam_1', 'webcam_2']
         args.class_num = 3
+    if args.dset == 'domainnet':
+        names = ['clipart_0','clipart_1','clipart_2', 'infograph_0', 'infograph_1', 'infograph_2','painting_0','painting_1','painting_2', 'quickdraw_0','quickdraw_1','quickdraw_2','real_0','real_1','real_2','sketch_0','sketch_1','sketch_2']
+        args.class_num = 345
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
     SEED = args.seed

@@ -1,0 +1,12 @@
+- dataset=domainnet
+- model.name=resnet18
+- model.hidden_dim=256
+- seed=2023
+- output_dir=./logs
+- dataset.domain=clipart_0
+- eval_batch_size=64
+- max_epochs=8
+- few_shot_num=4
+- checkpoint_dir=/2025May/ckps/source/uda
+- val_sample_num=2000
+- if_use_shot_model=True

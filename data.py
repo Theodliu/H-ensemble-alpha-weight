@@ -92,16 +92,20 @@ def setup_data(config: Any, is_test = False, few_shot_num = None):
 
             # cnt = [ [] for _ in range(val_dataset.num_classes) ] # CAN'T DO THIS, because task has been divied
             cnt = [ [] for _ in range(config.dataset.num_classes) ]
-
             indecies = np.random.permutation(len(val_dataset.targets))
             # for i, v in enumerate(val_dataset.targets):
             for i in indecies:
+                #print(i, val_dataset.targets[i])
                 v = val_dataset.targets[i]
                 if len(cnt[v]) < few_shot_num:
                     cnt[v].append(i)
+            count_num = 0
             for i in cnt:
-                assert len(i) == few_shot_num
-            
+                if(count_num == 345):
+                    print("Found 345 samples in class 345, which is not expected.")
+                else:
+                    assert len(i) == few_shot_num, f"Collected {len(i)} samples, but expected {few_shot_num} in class {count_num}."
+                count_num += 1
             # turn cnt into numpy array and flatten it
             train_indices = np.array(cnt).flatten()
             val_indices = np.array([i for i in range(len(val_dataset)) if i not in train_indices])

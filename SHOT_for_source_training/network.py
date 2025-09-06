@@ -7,7 +7,7 @@ from torch.autograd import Variable
 import math
 import torch.nn.utils.weight_norm as weightNorm
 from collections import OrderedDict
-from grl import WarmStartGradientReverseLayer, GradientReverseLayer
+from SHOT_for_source_training.grl import WarmStartGradientReverseLayer, GradientReverseLayer
 
 
 def calc_coeff(iter_num, high=1.0, low=0.0, alpha=10.0, max_iter=10000.0):

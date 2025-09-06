@@ -1,0 +1,25 @@
+==========================================
+gpu_id:0
+s:4
+t:1
+max_epoch:100
+batch_size:32
+worker:4
+dset:domainnet
+lr:0.01
+net:resnet18
+seed:2021
+bottleneck:256
+epsilon:1e-05
+layer:wn
+classifier:bn
+smooth:0.1
+output:ckps/source/uda
+trte:val
+class_num:345
+s_dset_path:./_dataset/domainnet/_image_list/infograph_1_list.txt
+test_dset_path:./_dataset/domainnet/_image_list/clipart_1_list.txt
+output_dir_src:ckps/source/uda/domainnet/infograph_1
+name_src:infograph_1
+out_file:<_io.TextIOWrapper name='ckps/source/uda/domainnet/infograph_1/log.txt' mode='w' encoding='utf-8'>
+

@@ -1,0 +1,864 @@
+nohup: ignoring input
+./run.sh: 1: train: not found
+usage: train_source.py [-h] [--gpu_id [GPU_ID]] [--s S] [--t T]
+                       [--max_epoch MAX_EPOCH] [--batch_size BATCH_SIZE]
+                       [--worker WORKER] [--dset DSET] [--lr LR] [--net NET]
+                       [--seed SEED] [--bottleneck BOTTLENECK]
+                       [--epsilon EPSILON] [--layer {linear,wn}]
+                       [--classifier {ori,bn}] [--smooth SMOOTH]
+                       [--output OUTPUT] [--trte {full,val}]
+train_source.py: error: argument --s: invalid int value: '{0..11}'
+./run.sh: 7: run: not found
+######Running with dataset.domain=amazon_0############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: amazon_0
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=amazon_0', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=amazon_1############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: amazon_1
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=amazon_1', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=amazon_2############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: amazon_2
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=amazon_2', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=caltech_0############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: caltech_0
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=caltech_0', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=caltech_1############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: caltech_1
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=caltech_1', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=caltech_2############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: caltech_2
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=caltech_2', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=dslr_0############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: dslr_0
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=dslr_0', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=dslr_1############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: dslr_1
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=dslr_1', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=dslr_2############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: dslr_2
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=dslr_2', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=webcam_0############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: webcam_0
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=webcam_0', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=webcam_1############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: webcam_1
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=webcam_1', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+######Running with dataset.domain=webcam_2############
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: webcam_2
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 119
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 8
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9
+
+domainnet
+Error executing job with overrides: ['dataset=domainnet', 'model.name=resnet18', 'model.hidden_dim=256', 'seed=2023', 'output_dir=./logs', 'dataset.domain=webcam_2', 'eval_batch_size=64', 'max_epochs=8', 'few_shot_num=8', 'checkpoint_dir=/2025May/ckps/source/uda', 'val_sample_num=2000', 'if_use_shot_model=True']
+Traceback (most recent call last):
+  File "/2025May/test_HEnsemble.py", line 394, in main
+    run(cfg)
+  File "/2025May/test_HEnsemble.py", line 208, in run
+    dataloader_train, dataloader_test = setup_data(
+                                        ^^^^^^^^^^^
+  File "/2025May/data.py", line 69, in setup_data
+    dataset_module = importlib.import_module(f"dataloader.{name}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'dataloader.domainnet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+Mean = -nan

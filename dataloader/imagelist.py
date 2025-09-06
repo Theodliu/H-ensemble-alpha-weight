@@ -4,10 +4,12 @@ from typing import Optional, Callable, Tuple, Any, List, Iterable
 import bisect
 from collections import Counter
 
-from torch.utils.data.dataset import Dataset, T_co, IterableDataset
+from torch.utils.data.dataset import Dataset, IterableDataset
 import torchvision.datasets as datasets
 from torchvision.datasets.folder import default_loader
+from typing import TypeVar, Generic
 
+T_co = TypeVar('T_co', covariant=True)
 
 class ImageList(datasets.VisionDataset):
     """A generic Dataset class for image classification

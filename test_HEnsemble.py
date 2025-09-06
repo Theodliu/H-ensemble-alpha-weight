@@ -16,9 +16,11 @@ import torch.functional as F
 from utils import *
 
 from tqdm import tqdm
-
+import logging
 import hydra
 from omegaconf import DictConfig, OmegaConf
+from sklearn.decomposition import PCA
+import itertools
 
 def get_model(config, domain, logger, return_feat=False):
     if config.if_use_shot_model:
@@ -98,6 +100,100 @@ def get_hscore(features, labels):
 
     return dif
 
+def get_ms_leep_score(feature, labels):
+    N, C_s = feature.shape
+    labels = labels.view(-1)
+    C_t = int(torch.max(labels).item() + 1)
+
+    normalized_prob = feature / float(N)
+    joint = torch.zeros(C_t, C_s, dtype=torch.float, device=feature.device)
+
+    for i in range(C_t):
+        mask = (labels == i)
+        this_class = normalized_prob[mask]
+        joint[i] = this_class.sum(dim=0)
+    
+    p_target_given_source = (joint / (joint.sum(dim=0, keepdim=True) + 1e-8)).T
+    empirical_prediction = feature @ p_target_given_source
+    empirical_prob = empirical_prediction[torch.arange(N), labels]
+    score = torch.mean(torch.log(empirical_prob + 1e-8))
+    score_clean = torch.nan_to_num(score, nan=0.0)
+    return score_clean
+
+def get_n_ms_leep_score(features_list, labels):
+    scores = torch.zeros(len(features_list), dtype=torch.float, device=features_list[0].device)
+    i = 0
+    for features in features_list:
+        scores[i] = get_ms_leep_score(features, labels)
+        print(f"model {i} score: {scores[i]}")
+        i+=1
+    topn_indices = torch.topk(scores, 3).indices
+    print("scores:", scores)
+    topn_values = scores[topn_indices]
+    proportions = topn_values / topn_values.sum()
+    print("topn values:",topn_values)
+    print("proportions:",proportions)
+    alpha = torch.zeros_like(scores)
+    #alpha[topn_indices] = 1 / 3
+    alpha = torch.zeros_like(scores)
+    alpha[topn_indices] = proportions
+
+    return alpha
+        
+
+
+def get_leep_score(features_list, labels):
+    S = len(features_list)
+    N, C_s = features_list[0].shape
+    labels = labels.view(-1)
+    C_t = int(torch.max(labels).item() + 1)
+    empirical_probs = []
+    for features in features_list:
+        normalized_prob = features / N
+        joint = torch.zeros(C_t, C_s, dtype=torch.float, device=features.device)
+        for i in range(C_t):
+            mask = (labels == i)
+            this_class = normalized_prob[mask]
+            joint[i] = this_class.sum(dim=0)
+        
+        # Compute P(y | z)
+        p_target_given_source = (joint / (joint.sum(dim=0, keepdim=True) + 1e-8)).T
+        empirical_prediction = features @ p_target_given_source
+        empirical_prediction = torch.clamp(empirical_prediction, min=1e-8)
+        empirical_prob = empirical_prediction[torch.arange(N), labels]
+        empirical_probs.append(empirical_prob)
+        
+    empirical_probs_ens = torch.stack(empirical_probs, dim=0).mean(dim=0)
+    score = torch.mean(torch.log(empirical_probs_ens + 1e-8))
+    return score
+
+def e_leep_best(features_list, labels, S_range=range(1, 4)):
+    N_models = len(features_list)
+    best_results = {}
+    best_combination = None
+    for S in S_range:
+        best_score = -float('inf')
+
+        for subset_indices in itertools.combinations(range(N_models), S):
+            subset = [features_list[i] for i in subset_indices]
+            score = get_leep_score(subset, labels)
+            if score > best_score:
+                best_score = score
+                best_combination = subset_indices
+    alpha = torch.zeros(N_models, dtype=torch.float)
+    for idx in best_combination:
+        alpha[idx] = 1.0 / len(best_combination)
+
+    return alpha
+
+
+def penalty_calculation(alpha,mode):
+    if mode == "h_l1":
+        return 0.1 * torch.norm(alpha, p=1) + 0.05 * torch.norm(alpha, p=2)
+    else:
+        return 0
+
+
 
 def optimize_alpha(config, domains, all_features_train, all_label_train, leave_one_out):
     # # insert 0 to alpha at target_domain_index
@@ -112,38 +208,90 @@ def optimize_alpha(config, domains, all_features_train, all_label_train, leave_o
     alpha.requires_grad = True
     all_features_train.requires_grad = False
     all_label_train.requires_grad = False
-
+    print(alpha)
     # optimizer = optim.SGD([alpha], lr=0.5)
 
     optimizer_class = optim.__dict__[config.alpha_opt.optimizer]
     optimizer = optimizer_class([alpha], lr=config.alpha_opt.lr)
     # weight_decay=config.alpha_opt.weight_decay
     
-    for epoch in tqdm(range(config.alpha_opt.epoch)):
-        optimizer.zero_grad()
+    mode = "m_leep"
+    if(mode == "h_l1" or mode == "regular"):
+        for epoch in tqdm(range(config.alpha_opt.epoch)):
+            optimizer.zero_grad()
 
-        if leave_one_out:
-            target_feature = get_target_feature_train(alpha, all_features_train)
-        else:
-            target_feature = get_target_feature(alpha, all_features_train)
+            if leave_one_out:
+                target_feature = get_target_feature_train(alpha, all_features_train)
+            else:
+                target_feature = get_target_feature(alpha, all_features_train)
+                #target_feature = alpha
+            h_score = -get_hscore(target_feature, all_label_train)
+            l1_penalty = penalty_calculation(alpha,mode)
+            loss = h_score + l1_penalty
+            loss.backward()
+            optimizer.step()
         
-        h_score = -get_hscore(target_feature, all_label_train)
 
-        h_score.backward()
-        optimizer.step()
+            # print(f"epoch {epoch}: h_score {h_score.item()}")
 
-        # print(f"epoch {epoch}: h_score {h_score.item()}")
-
-        # alpha.requires_grad = False
-        # alpha[alpha < 0] = 0
-        # alpha = alpha / alpha.sum() if alpha.sum() > 1 else alpha
-        # alpha.requires_grad = True
-    
+            # alpha.requires_grad = False
+            # alpha[alpha < 0] = 0
+            # alpha = alpha / alpha.sum() if alpha.sum() > 1 else alpha
+            # alpha.requires_grad = True
+    elif(mode == "leep"):
+        alpha = e_leep_best(all_features_train, all_label_train)
+        print(f"alpha strategy: {config.alpha_type}")
+        print(f"final alpha: {alpha}")
+    elif (mode == "m_leep"):
+        alpha = get_n_ms_leep_score(all_features_train, all_label_train)
+        print(f"alpha strategy: {config.alpha_type}")
+        print(f"final alpha: {alpha}")
+    alpha_final = alpha  # shape: [M] or [M-1]
+    if mode == "h_l1":
+        threshold = 1e-2
+        for i, a in enumerate(alpha_final.tolist()):
+            status = "ACTIVE" if abs(a) > threshold else "ELIMINATED"
+            print(f"Model {i:2d}: alpha = {a:.4f} → {status}")
+            if(status == "ACTIVE"):
+                with torch.no_grad():
+                    alpha[i] = a
+            else:
+                with torch.no_grad():
+                    alpha[i] = 0.0
+    elif mode == "random":
+        alpha = torch.distributions.Dirichlet(torch.ones(len(domains))).sample()
+        return alpha
     alpha.requires_grad = False
     if leave_one_out:
         alpha = torch.cat([alpha, (1 - alpha.sum()).view(-1)], dim=0)
-    # else:
-    # alpha = alpha / alpha.sum() if alpha.sum() > 1 else alpha
+    else:
+        alpha = alpha / alpha.sum() if alpha.sum() > 1 else alpha
+    return alpha
+
+def update_alpha(values, r, alpha):
+    denom = 1 - 1 / r
+    transformed = []
+
+    for v in values:
+        transformed.append((v - 1 / r) / denom)
+
+    total = sum(transformed)
+
+    if abs(total) < 1e-8:
+        return
+
+    for i in range(len(transformed)):
+        with torch.no_grad():
+            alpha[i] = transformed[i] / total
+    print(alpha)
+    print("新的alpha")
+    return
+
+def average_alpha(input_tensor):
+    L = input_tensor.shape[0]
+    device = input_tensor.device
+    alpha = torch.full((L,), 1.0 / L, device=device)
+    print(alpha)
     return alpha
 
 
@@ -179,6 +327,8 @@ def run(config: Any):
 
     print(f"target domain: {config.dataset.domain}")
 
+    model_conf=[]
+    accuracy_list = []
     with torch.no_grad():
 
         # save labels & features
@@ -211,8 +361,10 @@ def run(config: Any):
             all_features_train[i, :, :] = normalize(torch.cat(features_list, dim=0)).cuda()
             if all_label_train is None:
                 all_label_train = torch.cat(labels_list, dim=0).cuda()
-
-            print(f"source {d} model on {target_domain} accuracy: {torch.cat(res, dim=0).sum() / len(all_label_train)}")
+            tmp_accuracy=torch.cat(res, dim=0).sum() / len(all_label_train)
+            model_conf.append(tmp_accuracy)
+            print(f"source {d} model on {target_domain} accuracy: {tmp_accuracy}")
+            accuracy_list.append(tmp_accuracy.item())
     # exit()
 
     # stop with torch.no_grad()
@@ -268,7 +420,6 @@ def run(config: Any):
     del all_features_train,
     torch.cuda.empty_cache()
     gc.collect()
-
     print(f"\n\n*******start test on {config.dataset.domain}*******")
     with torch.no_grad():
         score = target_feature @ g.T
@@ -287,7 +438,6 @@ def run(config: Any):
         #     model_list.append(model)
         test_features = torch.zeros(len(dataloader_test.dataset), config.model.hidden_dim).cuda()
         test_label = None
-
         for i, d in enumerate(domains):
             features_list = []
             labels_list = []
@@ -317,6 +467,9 @@ def run(config: Any):
         print("Incorrect num: ", (torch.argmax(score, dim=1) != test_label.cuda()).sum().cpu().item())
         acc_test = (torch.argmax(score, dim=1) == test_label.cuda()).sum().cpu().item() / len(dataloader_test.dataset)
         print(f"Target(Test) accuracy: {acc_test} ; test sample: {len(dataloader_test.dataset)}")
+        with open("results.txt", "a") as f:
+            f.write(f"{acc_test:.4f}\n")
+            f.write(f"{alpha.tolist()}\n")
     print(f"*******done - target: {config.dataset.domain} ; source: {domains}*******")
     print("#########################################################\n\n\n")
 

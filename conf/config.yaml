@@ -19,13 +19,13 @@ if_use_shot_model: false
 
 log_every_iters: 1 # office31: 2k; office-caltech: 900
 
-few_shot_num: 10
+few_shot_num: 8
 
 # val_sample_num: null
 val_sample_num: 2000
 
 # random, average, hscore, opt_all, opt_leave_one_out
-alpha_type: opt_leave_one_out
+alpha_type: opt_all
 alpha_opt:
   lr: 0.005
   optimizer: SGD

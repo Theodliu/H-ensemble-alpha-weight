@@ -1,0 +1,49 @@
+dataset:
+  root: ./_dataset/domainnet
+  name: domainnet
+  domain: quickdraw_2
+  domains:
+  - clipart_0
+  - clipart_1
+  - clipart_2
+  - infograph_0
+  - infograph_1
+  - infograph_2
+  - painting_0
+  - painting_1
+  - painting_2
+  - quickdraw_0
+  - quickdraw_1
+  - quickdraw_2
+  - real_0
+  - real_1
+  - real_2
+  num_classes: 345
+seed: 2023
+train_batch_size: 256
+eval_batch_size: 64
+num_workers: 12
+max_epochs: 8
+lr: 0.0001
+use_amp: false
+debug: false
+filename_prefix: training
+n_saved: 2
+save_every_iters: 10000000
+patience: 3
+output_dir: ./logs
+checkpoint_dir: /2025May/ckps/source/uda
+if_use_shot_model: true
+log_every_iters: 1
+few_shot_num: 4
+val_sample_num: 2000
+alpha_type: opt_all
+alpha_opt:
+  lr: 0.005
+  optimizer: SGD
+  epoch: 1000
+model:
+  name: resnet18
+  hidden_dim: 256
+data:
+  train_ratio: 0.9

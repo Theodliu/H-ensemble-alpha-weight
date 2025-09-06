@@ -1,0 +1,35 @@
+==========================================
+gpu_id:0
+s:10
+t:1
+max_epoch:100
+batch_size:32
+worker:4
+dset:office-caltech
+lr:0.01
+net:resnet18
+seed:2021
+bottleneck:256
+epsilon:1e-05
+layer:wn
+classifier:bn
+smooth:0.1
+output:ckps/source/uda
+trte:val
+class_num:3
+s_dset_path:./_dataset/office-caltech/_image_list/webcam_1_list.txt
+test_dset_path:./_dataset/office-caltech/_image_list/amazon_1_list.txt
+output_dir_src:ckps/source/uda/office-caltech/webcam_1
+name_src:webcam_1
+out_file:<_io.TextIOWrapper name='ckps/source/uda/office-caltech/webcam_1/log.txt' mode='w' encoding='utf-8'>
+
+Task: webcam_1, Iter:30/300; Accuracy = 100.00%
+Task: webcam_1, Iter:60/300; Accuracy = 100.00%
+Task: webcam_1, Iter:90/300; Accuracy = 100.00%
+Task: webcam_1, Iter:120/300; Accuracy = 100.00%
+Task: webcam_1, Iter:150/300; Accuracy = 100.00%
+Task: webcam_1, Iter:180/300; Accuracy = 100.00%
+Task: webcam_1, Iter:210/300; Accuracy = 100.00%
+Task: webcam_1, Iter:240/300; Accuracy = 100.00%
+Task: webcam_1, Iter:270/300; Accuracy = 100.00%
+Task: webcam_1, Iter:300/300; Accuracy = 100.00%

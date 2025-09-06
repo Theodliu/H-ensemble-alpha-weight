@@ -1,0 +1,34 @@
+==========================================
+gpu_id:0
+s:1
+t:1
+max_epoch:100
+batch_size:32
+worker:4
+dset:domainnet
+lr:0.01
+net:resnet18
+seed:2021
+bottleneck:256
+epsilon:1e-05
+layer:wn
+classifier:bn
+smooth:0.1
+output:ckps/source/uda
+trte:val
+class_num:345
+s_dset_path:./_dataset/domainnet/_image_list/clipart_1_list.txt
+test_dset_path:./_dataset/domainnet/_image_list/clipart_1_list.txt
+output_dir_src:ckps/source/uda/domainnet/clipart_1
+name_src:clipart_1
+out_file:<_io.TextIOWrapper name='ckps/source/uda/domainnet/clipart_1/log.txt' mode='w' encoding='utf-8'>
+
+Task: clipart_1, Iter:3160/31600; Accuracy = 62.36%
+Task: clipart_1, Iter:6320/31600; Accuracy = 61.91%
+Task: clipart_1, Iter:9480/31600; Accuracy = 62.27%
+Task: clipart_1, Iter:12640/31600; Accuracy = 62.09%
+Task: clipart_1, Iter:15800/31600; Accuracy = 63.60%
+Task: clipart_1, Iter:18960/31600; Accuracy = 62.89%
+Task: clipart_1, Iter:22120/31600; Accuracy = 63.87%
+Task: clipart_1, Iter:25280/31600; Accuracy = 63.87%
+Task: clipart_1, Iter:28440/31600; Accuracy = 63.16%

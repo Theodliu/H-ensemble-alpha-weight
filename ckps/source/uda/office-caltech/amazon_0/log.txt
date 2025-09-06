@@ -1,0 +1,35 @@
+==========================================
+gpu_id:0
+s:0
+t:1
+max_epoch:100
+batch_size:32
+worker:4
+dset:office-caltech
+lr:0.01
+net:resnet18
+seed:2021
+bottleneck:256
+epsilon:1e-05
+layer:wn
+classifier:bn
+smooth:0.1
+output:ckps/source/uda
+trte:val
+class_num:3
+s_dset_path:./_dataset/office-caltech/_image_list/amazon_0_list.txt
+test_dset_path:./_dataset/office-caltech/_image_list/amazon_1_list.txt
+output_dir_src:ckps/source/uda/office-caltech/amazon_0
+name_src:amazon_0
+out_file:<_io.TextIOWrapper name='ckps/source/uda/office-caltech/amazon_0/log.txt' mode='w' encoding='utf-8'>
+
+Task: amazon_0, Iter:80/800; Accuracy = 100.00%
+Task: amazon_0, Iter:160/800; Accuracy = 100.00%
+Task: amazon_0, Iter:240/800; Accuracy = 100.00%
+Task: amazon_0, Iter:320/800; Accuracy = 100.00%
+Task: amazon_0, Iter:400/800; Accuracy = 100.00%
+Task: amazon_0, Iter:480/800; Accuracy = 100.00%
+Task: amazon_0, Iter:560/800; Accuracy = 100.00%
+Task: amazon_0, Iter:640/800; Accuracy = 100.00%
+Task: amazon_0, Iter:720/800; Accuracy = 100.00%
+Task: amazon_0, Iter:800/800; Accuracy = 100.00%

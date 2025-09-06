@@ -1,7 +1,9 @@
 import os
+import sys
 from models.classifier import Classifier
 from torchvision import models
 import torch.nn as nn
+
 
 def setup_model(config, return_feat=False):
     
@@ -30,7 +32,9 @@ def load_SHOT_model(config, domain, return_feat=False):
     import torch.nn.functional as F
     
     import network
-    sys.path.pop()
+    if len(sys.path) > 0:
+        sys.path.pop()
+    #sys.path.pop()
 
     name = config.model.name
 
